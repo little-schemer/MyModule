@@ -5,7 +5,7 @@
 --
 -------------------------------------------------------------
 
-module My.Utility where
+module MyModule.Utility where
 
 import Data.List (foldl', sort, tails)
 import Data.Char (intToDigit)
