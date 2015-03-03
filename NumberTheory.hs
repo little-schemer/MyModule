@@ -248,7 +248,7 @@ isqrt = truncate . sqrt . fromIntegral
 -- 整数か？(小数点以下は 0 か？)
 --
 isInteger :: RealFrac a => a -> Bool
-isInteger n = (snd . properFraction) n == 0.0
+isInteger = (== 0) . snd . properFraction
 
 --
 -- 二次方程式 a * x ^ 2 + b x + c = 0 の大きい方の根は整数か？
