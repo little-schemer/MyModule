@@ -12,8 +12,30 @@ module My.NumberTheory where
 import Data.List  (sort)
 import Data.Ratio
 import Data.Maybe
-import My.Primes  (power, factorize)
-import My.Utility (integralToList)
+import MyModule.Primes  (factorize)
+import MyModule.Utility (integralToList)
+
+
+
+-----------------------------------------
+-- 冪乗法
+-----------------------------------------
+-- 『素因数分解と素数判定』 p.29 参照
+--
+-- e の初期値 : 関数 f の単位元
+-- ex : 2^100 == power (*) 1 2 100
+--
+power :: Integral a => (t -> t -> t) -> t -> t -> a -> t
+power _ e _ 0 = e
+power f e a n = power f (if odd n then f a e else e) (f a a) (div n 2)
+
+--
+-- a^n (mod m)
+--
+powerMod :: (Integral a, Integral t) => t -> a -> t -> t
+powerMod a n m = power (\x y -> mod (x * y) m) 1 a n
+
+
 
 -----------------------------------------
 -- 数列関連
