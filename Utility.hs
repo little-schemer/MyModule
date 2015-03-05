@@ -1,7 +1,7 @@
 -------------------------------------------------------------
 --
--- Module : Utility.hs
--- Coding : Tsumuji
+-- Module : MyModule.Utility
+-- Coding : Little Schemer
 --
 -------------------------------------------------------------
 
@@ -10,6 +10,8 @@ module MyModule.Utility where
 import Data.List (foldl', sort, tails)
 import Data.Char (intToDigit)
 import Control.Monad (replicateM)
+
+
 
 -----------------------------------------
 -- 整数とリストの変換

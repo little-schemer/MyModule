@@ -1,7 +1,7 @@
 -------------------------------------------------------------
 --
--- Module : Primes.hs
--- Coding : Tsumuji
+-- Module : MyModule.Primes
+-- Coding : Little Schemer
 --
 -- 素数関連の関数群
 --

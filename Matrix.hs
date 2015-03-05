@@ -1,17 +1,18 @@
 -------------------------------------------------------------
 --
--- Module : Matrix.hs
--- Coding : Tsumuji
+-- Module : MyModule.Matrix
+-- Coding : Little Schemer
 --
 -- ベクトル及び行列の計算
 --
 -------------------------------------------------------------
 
-module My.Matrix where
+module MyModule.Matrix where
 
 import Data.List  (transpose)
 import My.Primes  (power)
 import My.Utility (deleteAt, splits)
+
 
 
 -----------------------------------------

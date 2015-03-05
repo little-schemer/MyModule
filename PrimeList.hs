@@ -1,18 +1,20 @@
 -------------------------------------------------------------
 --
--- Module : My.PrimeList.hs
--- Coding : Tsumuji
+-- Module : MyModule.PrimeList
+-- Coding : Little Schemer
 --
 -- エラトステネスの篩による素数リスト
 --
 -------------------------------------------------------------
 
-
+module MyModule.PrimeList (primeList) where
 
 import Data.Array.ST
 import Data.Array.Unboxed
 import Data.Array.Base (unsafeRead, unsafeWrite)
 import Control.Monad
+
+
 
 -- エラトステネスの篩
 sieve :: Int -> UArray Int Bool
@@ -30,6 +32,3 @@ sieve n = runSTUArray $ do
 -- エラトステネスの篩による素数リスト
 primeList :: Int -> [Int]
 primeList n = [p | (p, bool) <- assocs $ sieve n, bool]
-
-main = print $ sum $ map fromIntegral $ primeList 10000000
--- main = print $ last $ primeList 100000000

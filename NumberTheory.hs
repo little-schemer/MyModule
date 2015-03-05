@@ -1,13 +1,13 @@
 -------------------------------------------------------------
 --
--- Module : NumberTheory.hs
--- Coding : Tsumuji
+-- Module : MyModule.NumberTheory
+-- Coding : Little Schemer
 --
 -- 数学関連の関数群
 --
 -------------------------------------------------------------
 
-module My.NumberTheory where
+module MyModule.NumberTheory where
 
 import Data.List  (sort)
 import Data.Ratio
