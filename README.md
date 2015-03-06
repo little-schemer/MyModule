@@ -12,3 +12,6 @@
 
 ## Primes.hs
 - 素数列、素数判定、素因数分解
+
+## Utility.hs
+- Project Euler などの問題を解くために利用できそうな関数群
