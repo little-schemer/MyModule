@@ -38,11 +38,11 @@ primes = map fromIntegral $ [2, 3] ++ primes'
 --
 -- 素数判定 (試し割り法)
 --
--- from http://itchyny.hatenablog.com/entry/2014/10/01/100000
+-- http://itchyny.hatenablog.com/entry/2014/10/01/100000 を参考に
 --
 isPrime :: Integral a => a -> Bool
 isPrime n = n > 1 && foldr f True primes
-  where f p r = (p * p > n) || (rem n p /= 0 && r)
+  where f p b = (p * p > n) || (rem n p /= 0 && b)
 
 
 
