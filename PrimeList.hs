@@ -3,32 +3,32 @@
 -- Module : MyModule.PrimeList
 -- Coding : Little Schemer
 --
--- ƒGƒ‰ƒgƒXƒeƒlƒX‚Ìâ¿‚É‚æ‚é‘f”ƒŠƒXƒg
+-- ã‚¨ãƒ©ãƒˆã‚¹ãƒ†ãƒã‚¹ã®ç¯©ã«ã‚ˆã‚‹ç´ æ•°ãƒªã‚¹ãƒˆ Data.Vector ç‰ˆ
 --
 -------------------------------------------------------------
 
 module MyModule.PrimeList (primeList) where
 
-import Data.Array.ST
-import Data.Array.Unboxed
-import Data.Array.Base (unsafeRead, unsafeWrite)
-import Control.Monad
+import qualified Data.Vector.Unboxed as U
+import qualified Data.Vector.Unboxed.Mutable as UM
+import Control.Monad.ST (runST)
+import  Control.Monad (when)
 
 
-
--- ƒGƒ‰ƒgƒXƒeƒlƒX‚Ìâ¿
-sieve :: Int -> UArray Int Bool
-sieve n = runSTUArray $ do
-  arr <- newArray (0, n) True
-  mapM_ (setFalse arr) $ [0, 1] ++ [4, 6 .. n]
-  mapM_ (loop arr) [3, 5 .. floor $ sqrt $ fromIntegral n]
-  return arr
+-- ã‚¨ãƒ©ãƒˆã‚¹ãƒ†ãƒã‚¹ã®ç¯©
+sieve :: Int -> U.Vector Bool
+sieve n = runST $ do
+  mVec <- UM.replicate (n + 1) True
+  mapM_ (setFalse mVec) (0 : 1 : [4, 6 .. n])
+  mapM_ (loop mVec) [3, 5 .. floor $ sqrt $ fromIntegral n]
+  U.unsafeFreeze mVec
     where
-      loop arr k = do
-        v <- unsafeRead arr k
-        when v $ mapM_ (setFalse arr) [k * k, k * (k + 2) .. n]
-      setFalse arr k = unsafeWrite arr k False
+      setFalse vec i = UM.unsafeWrite vec i False
+      loop vec i = do
+        v <- UM.unsafeRead vec i
+        when v $ mapM_ (setFalse vec) [i * i, i * (i + 2) .. n]
 
--- ƒGƒ‰ƒgƒXƒeƒlƒX‚Ìâ¿‚É‚æ‚é‘f”ƒŠƒXƒg
+-- ã‚¨ãƒ©ãƒˆã‚¹ãƒ†ãƒã‚¹ã®ç¯©ã«ã‚ˆã‚‹ç´ æ•°ãƒªã‚¹ãƒˆ
 primeList :: Int -> [Int]
-primeList n = [p | (p, bool) <- assocs $ sieve n, bool]
+primeList n = U.toList $ U.elemIndices True $ sieve n
+
