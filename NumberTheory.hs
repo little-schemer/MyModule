@@ -1,9 +1,9 @@
 -------------------------------------------------------------
 --
+-- 数学関連の関数群
+--
 -- Module : MyModule.NumberTheory
 -- Coding : Little Schemer
---
--- 数学関連の関数群
 --
 -------------------------------------------------------------
 
@@ -14,7 +14,6 @@ import Data.Ratio
 import Data.Maybe
 import MyModule.Primes  (factorize)
 import MyModule.Utility (integralToList)
-
 
 
 -----------------------------------------

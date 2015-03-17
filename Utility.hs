@@ -1,5 +1,7 @@
 -------------------------------------------------------------
 --
+-- ユーティリティ関数群
+--
 -- Module : MyModule.Utility
 -- Coding : Little Schemer
 --
@@ -10,7 +12,6 @@ module MyModule.Utility where
 import Data.List (foldl', sort, tails)
 import Data.Char (intToDigit)
 import Control.Monad (replicateM)
-
 
 
 -----------------------------------------

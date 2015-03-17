@@ -1,9 +1,9 @@
 -------------------------------------------------------------
 --
+-- ベクトル及び行列の計算
+--
 -- Module : MyModule.Matrix
 -- Coding : Little Schemer
---
--- ベクトル及び行列の計算
 --
 -------------------------------------------------------------
 
@@ -12,7 +12,6 @@ module MyModule.Matrix where
 import Data.List  (transpose)
 import My.Primes  (power)
 import My.Utility (deleteAt, splits)
-
 
 
 -----------------------------------------
