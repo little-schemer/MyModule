@@ -9,7 +9,7 @@
 
 module MyModule.NumberTheory where
 
-import Data.List  (sort)
+import Data.List        (sort)
 import Data.Ratio
 import Data.Maybe
 import MyModule.Primes  (factorize)

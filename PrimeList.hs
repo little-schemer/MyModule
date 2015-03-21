@@ -9,10 +9,10 @@
 
 module MyModule.PrimeList (primeList) where
 
-import qualified Data.Vector.Unboxed as U
-import qualified Data.Vector.Unboxed.Mutable as UM
+import qualified Data.Vector.Unboxed         as U
+import qualified Data.Vector.Unboxed.Mutable as M
 import Control.Monad.ST (runST)
-import Control.Monad (when)
+import Control.Monad    (when)
 
 --
 -- エラトステネスの篩による素数リスト
@@ -25,12 +25,12 @@ primeList n = U.toList $ U.elemIndices True $ sieve n
 -- エラトステネスの篩
 sieve :: Int -> U.Vector Bool
 sieve n = runST $ do
-  mVec <- UM.replicate (n + 1) True
+  mVec <- M.replicate (n + 1) True
   mapM_ (setFalse mVec) (0 : 1 : [4, 6 .. n])
   mapM_ (loop mVec) [3, 5 .. floor $ sqrt $ fromIntegral n]
   U.unsafeFreeze mVec
     where
-      setFalse vec i = UM.unsafeWrite vec i False
+      setFalse vec i = M.unsafeWrite vec i False
       loop vec i = do
-        v <- UM.unsafeRead vec i
+        v <- M.unsafeRead vec i
         when v $ mapM_ (setFalse vec) [i * i, i * (i + 2) .. n]

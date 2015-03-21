@@ -9,7 +9,7 @@
 
 module MyModule.Primes where
 
-import Data.List  (group, intercalate)
+import Data.List (group, intercalate)
 
 
 -----------------------------------------
@@ -71,11 +71,5 @@ factorize' n = loop n primes
 -- 素因数分解した結果の表示
 --
 showFactorize :: (Integral a, Show a) => a -> String
-showFactorize n = intercalate " * " lst
-  where lst = [show p ++ "^" ++ show i | (p, i) <- factorize n]
-
---
--- factorize のテスト用
---
-factorizeTest :: Integral a => [(a, Int)] -> a
-factorizeTest xs = product [f ^ i | (f, i) <- xs]
+showFactorize n = intercalate " * " [f p i | (p, i) <- factorize n]
+  where f p i = if i == 1 then show p else show p ++ "^" ++ show i
