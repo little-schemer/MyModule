@@ -120,7 +120,7 @@ isPolyNum p n = isIntRoot (p - 2) (4 - p) (-2 * n)
 divisor :: Integral a => a -> [a]
 divisor n = sort $ foldr f [1] ns
     where
-      ns = [map (f ^) [0 .. i] | (f, i) <- factorize n]
+      ns = [map (p ^) [0 .. i] | (p, i) <- factorize n]
       f ns1 ns2 = [x * y | x <- ns1, y <- ns2]
 
 --
