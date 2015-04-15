@@ -9,9 +9,9 @@
 
 module MyModule.Matrix where
 
-import Data.List  (transpose)
-import My.Primes  (power)
-import My.Utility (deleteAt, splits)
+import Data.List             (transpose)
+import MyModule.NumberTheory (power)
+import MyModule..Utility     (deleteAt, splits)
 
 
 -----------------------------------------
