@@ -21,7 +21,9 @@ import MyModule.Utility (integralToList)
 -----------------------------------------
 -- 『素因数分解と素数判定』 p.29 参照
 --
--- e の初期値 : 関数 f の単位元
+-- * 関数 f は Monoid 則を満していること。
+-- * e の初期値 : 関数 f の単位元
+--
 -- ex : 2^100 == power (*) 1 2 100
 --
 power :: Integral a => (t -> t -> t) -> t -> t -> a -> t
@@ -64,18 +66,15 @@ fibonacci n = fst $ power calc (0, 1) (1, 0) n
 -- Fibonacci 数
 --
 -- *「ビネの公式」を使った方法
--- * http://labs.timedia.co.jp/2012/11/fibonacci-general-term-using-rational.html
---   を参考にした
---
--- * f n = (f' n) / √5
--- * f' n = (1 / 2 + √5 / 2) ^ n - (1 / 2 - √5 / 2) ^ n
--- * f' n を計算すると、有理数項は打ち消しあって、√5 の項のみが残る。
+-- * 参考 :
+--   http://labs.timedia.co.jp/2012/11/fibonacci-general-term-using-rational.html
+-- * (1 / 2 + √5 / 2) ^ n - (1 / 2 - √5 / 2) ^ n を計算すると、有理数
+--   項は打ち消しあって、√5 の項のみが残る。
 --
 fibonacci2 :: Int -> Integer
 fibonacci2 0 = 0
 fibonacci2 n = truncate . (* 2) . snd $ power f (1, 0) (1 % 2, 1 % 2) n
   where f (a1, b1) (a2, b2) = (a1 * a2 + 5 * b1 * b2, a1 * b2 + a2 * b1)
-
 
 --
 -- Lucas 数
@@ -95,18 +94,14 @@ polyNumList :: Integral a => a -> [a]
 polyNumList n = scanl (+) 0 [1, n - 1 ..]
 
 --
--- 多角数の一般項   from Wikipedia
+-- 多角数の一般項
+--
+-- * from Wikipedia
 --
 -- ex : map (polyNum 3) [1 .. 5] => [1,3,6,10,15]
 --
 polyNum :: Integral a => a -> a -> a
 polyNum p n = div (n * ((p - 2) * n - (p - 4))) 2
-
---
--- 多角数か？
---
-isPolyNum :: Integral a => a -> a -> Bool
-isPolyNum p n = isIntRoot (p - 2) (4 - p) (-2 * n)
 
 
 
@@ -126,33 +121,33 @@ divisor n = sort $ foldr f [1] ns
 --
 -- 約数の個数
 --
-countOfDivs :: Integral a => a -> Int
-countOfDivs n = product [b + 1 | (_, b) <- factorize n]
+numberOfDivisors :: Integral a => a -> Int
+numberOfDivisors n = product [i + 1 | (_, i) <- factorize n]
 
 --
 -- 約数の和
 --
-sigma :: Integral a => a -> a
-sigma n = product [f p i | (p, i) <- factorize n]
+sumOfDivisors :: Integral a => a -> a
+sumOfDivisors n = product [f p i | (p, i) <- factorize n]
     where f p i = div (p ^ (i + 1) - 1) (p - 1)
 
 --
 -- 完全数か ?
 --
 isPerfect :: Integral a => a -> Bool
-isPerfect n = n + n == sigma n
+isPerfect n = n + n == sumOfDivisors n
 
 --
 -- 過剰数か ?
 --
 isAbundant :: Integral a => a -> Bool
-isAbundant n = n + n < sigma n
+isAbundant n = n + n < sumOfDivisors n
 
 --
 -- 不足数か ?
 --
 isDeficient :: Integral a => a -> Bool
-isDeficient n = n + n > sigma n
+isDeficient n = n + n > sumOfDivisors n
 
 --
 -- 友愛数のもう片方を探す
@@ -162,9 +157,9 @@ isDeficient n = n + n > sigma n
 --
 findAmicableNumber :: Integral a => a -> Maybe a
 findAmicableNumber x
-  | (x /= y) && (sigma y - y == x) = Just y
+  | (x /= y) && (sumOfDivisors y - y == x) = Just y
   | otherwise = Nothing
-  where y = sigma x - x
+  where y = sumOfDivisors x - x
 
 --
 -- 友愛数のペアのうち、小さい値が引数の範囲内にあるものを返す。
@@ -185,6 +180,7 @@ amicablePairs xs = [(x, fromJust y) | x <- xs,
 -- ピタゴラス数
 --
 -- * a + b + c = n, a^2 + b^2 = c^2, a < b < c の組を探す
+--
 -- 1. a + a + a < n よって a <= div n 3
 -- 2. a^2 + b^2 = (n - a - b)^2 変形すると、
 --    b = n / 2 - (a * n) / (2 * (n - a))
@@ -248,15 +244,6 @@ isqrt = truncate . sqrt . fromIntegral
 --
 isInteger :: RealFrac a => a -> Bool
 isInteger = (== 0) . snd . properFraction
-
---
--- 二次方程式 a * x ^ 2 + b x + c = 0 の大きい方の根は整数か？
---
-isIntRoot :: Integral a => a -> a -> a -> Bool
-isIntRoot a b c = x == y * y && rem (y - b) (2 * a) == 0
-    where
-      x = b * b - 4 * a * c
-      y = round $ sqrt $ fromIntegral x
 
 --
 -- 下降階乗冪
@@ -324,7 +311,7 @@ binarySize = length . integralToList 2
 --
 -- * "x^2 - d * y^ = 1" の解 (x, y) (x > 1, y > 1) を小さい順に返す。
 --
--- from http://www004.upp.so-net.ne.jp/s_honma/pell/pell.htm
+-- * from http://www004.upp.so-net.ne.jp/s_honma/pell/pell.htm
 --
 pell'sEquation :: Integer -> [(Integer, Integer)]
 pell'sEquation d = iterate (f (x, y)) (x, y)
