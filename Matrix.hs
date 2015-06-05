@@ -11,7 +11,7 @@ module MyModule.Matrix where
 
 import Data.List             (transpose)
 import MyModule.NumberTheory (power)
-import MyModule..Utility     (deleteAt, splits)
+import MyModule.Utility     (deleteAt, splits)
 
 
 -----------------------------------------
