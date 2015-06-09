@@ -50,12 +50,12 @@ divisorsList :: Int -> [[Int]]
 divisorsList n = tail $ V.toList $ runST $ do
   mVec <- VM.replicate (n + 1) []
   mapM_ (setDivs mVec) [n, n - 1 .. 1]
-  V.freeze mVec
+  V.unsafeFreeze mVec
     where
       setDivs vec i = mapM_ (setNum vec i) [i, 2 * i .. n]
       setNum vec n i = do
-        lst <- VM.read vec i
-        VM.write vec i (n : lst)
+        lst <- VM.unsafeRead vec i
+        VM.unsafeWrite vec i (n : lst)
 
 
 --
@@ -74,15 +74,15 @@ factorsList' n = tail $ map reverse $  V.toList $ sieve
     sieve = runST $ do
       vec <- VM.replicate (n + 1) []
       mapM_ (consP vec) [2 .. n]
-      V.freeze vec
+      V.unsafeFreeze vec
     consP vec p = do
-      v <- VM.read vec p
+      v <- VM.unsafeRead vec p
       when (null v) $ mapM_ f $ takeWhile (<= n) $ iterate (* p) p
         where
           f i = mapM_ g [i, 2 * i .. n]
           g i = do
-            ps <- VM.read vec i
-            VM.write vec i (p : ps)
+            ps <- VM.unsafeRead vec i
+            VM.unsafeWrite vec i (p : ps)
 
 
 --
