@@ -88,6 +88,8 @@ factorsList' n = tail $ map reverse $  V.toList $ sieve
 --
 -- 1 〜 n までのオイラーのφ関数のリスト
 --
+-- ex : phiList 10  =>  [1,1,2,2,4,2,6,4,6,4]
+--
 phiList :: Int -> [Int]
 phiList n = map f $ factorsList n
   where f xs = product [p^(i - 1) * (p - 1) | (p, i) <- xs]
