@@ -31,7 +31,6 @@ primeList n = 2 : (map indexToValue $ U.toList $ U.elemIndices True $ sieve)
     valueToIndex v = div (v - 3) 2
     lastIndex      = valueToIndex n
 
-    -- エラトステネスの篩
     sieve = runST $ do
       mVec <- UM.replicate (lastIndex + 1) True
       mapM_ (loop mVec) [0 .. valueToIndex (floor $ sqrt $ fromIntegral n)]
