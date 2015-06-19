@@ -24,21 +24,28 @@ import Data.List
 --
 -- * ex : primeList 20  =>  [2,3,5,7,11,13,17,19]
 --
+indexToValue i = 2 * i + 3
+valueToIndex v = div (v - 3) 2
+indexSquare i  = 2 * i * (i + 3) + 3
+
+
 primeList :: Int -> [Int]
-primeList n = U.toList $ U.elemIndices True $ sieve n
+primeList n = 2 : (map indexToValue $ U.toList $ U.elemIndices True $ sieve n)
 
 -- エラトステネスの篩
 sieve :: Int -> U.Vector Bool
 sieve n = runST $ do
-  mVec <- UM.replicate (n + 1) True
-  mapM_ (setFalse mVec) (0 : 1 : [4, 6 .. n])
-  mapM_ (loop mVec) [3, 5 .. floor $ sqrt $ fromIntegral n]
-  U.unsafeFreeze mVec
+  mVec <- UM.replicate (lastIndex + 1) True
+  mapM_ (loop mVec) [0 .. valueToIndex (floor $ sqrt $ fromIntegral n)]
+  U.freeze mVec
     where
-      setFalse vec i = UM.unsafeWrite vec i False
+      lastIndex = valueToIndex n
+      setFalse vec i = UM.write vec i False
       loop vec i = do
-        v <- UM.unsafeRead vec i
-        when v $ mapM_ (setFalse vec) [i * i, i * (i + 2) .. n]
+        v <- UM.read vec i
+        when v $ do let p = indexToValue i
+                    let f = indexSquare i
+                    mapM_ (setFalse vec) [f, f + p .. lastIndex]
 
 
 --
