@@ -36,12 +36,12 @@ primeList n = 2 : (map indexToValue $ U.toList $ U.elemIndices True $ sieve)
       mapM_ (loop mVec) [0 .. valueToIndex (floor $ sqrt $ fromIntegral n)]
       U.unsafeFreeze mVec
 
-    setFalse vec i = UM.unsafeWrite vec i False
-
     loop vec i = do
       v <- UM.unsafeRead vec i
-      when v $ do let (s, d) = (2 * i * (i + 3) + 3, indexToValue i)
-                  mapM_ (setFalse vec) [s, s + d .. lastIndex]
+      when v $ do
+        let (s, d) = (2 * i * (i + 3) + 3, indexToValue i)
+        mapM_ setFalse [s, s + d .. lastIndex]
+          where setFalse i = UM.unsafeWrite vec i False
 
 
 --
@@ -50,15 +50,18 @@ primeList n = 2 : (map indexToValue $ U.toList $ U.elemIndices True $ sieve)
 -- * ex : divisorsList 5  =>  [[1],[1,2],[1,3],[1,2,4],[1,5]]
 --
 divisorsList :: Int -> [[Int]]
-divisorsList n = tail $ V.toList $ runST $ do
-  mVec <- VM.replicate (n + 1) []
-  mapM_ (setDivs mVec) [n, n - 1 .. 1]
-  V.unsafeFreeze mVec
-    where
-      setDivs vec i = mapM_ (setNum vec i) [i, 2 * i .. n]
-      setNum vec n i = do
-        lst <- VM.unsafeRead vec i
-        VM.unsafeWrite vec i (n : lst)
+divisorsList n = tail $ V.toList $ sieve
+  where
+    sieve = runST $ do
+      mVec <- VM.replicate (n + 1) []
+      mapM_ (setDivs mVec) [n, n - 1 .. 1]
+      V.unsafeFreeze mVec
+
+    setDivs vec i  = mapM_ (setNum i) [i, i + i .. n]
+      where
+        setNum n i = do
+          lst <- VM.unsafeRead vec i
+          VM.unsafeWrite vec i (n : lst)
 
 
 --
@@ -78,6 +81,7 @@ factorsList' n = tail $ map reverse $  V.toList $ sieve
       vec <- VM.replicate (n + 1) []
       mapM_ (consP vec) [2 .. n]
       V.unsafeFreeze vec
+
     consP vec p = do
       v <- VM.unsafeRead vec p
       when (null v) $ mapM_ f $ takeWhile (<= n) $ iterate (* p) p
