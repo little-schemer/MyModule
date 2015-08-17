@@ -44,8 +44,7 @@ dexToList = integralToList 10
 -- ex : listToIntegral 2 [1,1,1,1,0,1,1] => 123
 --
 listToIntegral :: Integral a => a -> [a] -> a
-listToIntegral radix ns = foldl' calc 0 ns
-    where calc x y = x * radix + y
+listToIntegral radix ns = foldl' ((+) . (* radix)) 0 ns
 
 --
 -- リストを整数に変換 (十進法限定)
