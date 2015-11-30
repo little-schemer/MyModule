@@ -162,7 +162,7 @@ combination ns n = comb n [(ns, [])]
     where
       comb 0 xs = [a | (_, a) <- xs]
       comb c xs = comb (c - 1) $ concatMap f xs
-      f (xs, ys) = [(as, ys ++ [a]) | (a : as) <- tails xs]
+      f (xs, ys) = map (\(a : as) -> (as, ys ++ [a])) $ init $ tails xs
 
 --
 -- 重複組み合わせ (repeated combination)
