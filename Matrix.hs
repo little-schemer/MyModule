@@ -197,7 +197,7 @@ cofactor (i, j) ma = if odd (i + j) then negate x else x
 --
 -- Fibonacci 数
 --
--- * 行列を使用
+-- + 行列を使用
 --
 fibonacci :: Int -> Integer
 fibonacci n = matrixRef (1, 2) $ [[1,1],[1,0]] |^ n

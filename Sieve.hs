@@ -22,7 +22,7 @@ import Data.List
 --
 -- エラトステネスの篩による素数リスト
 --
--- * ex : primeList 20  =>  [2,3,5,7,11,13,17,19]
+-- + ex : primeList 20  =>  [2,3,5,7,11,13,17,19]
 --
 primeList :: Int -> [Int]
 primeList n = 2 : (map indexToValue $ U.toList $ U.elemIndices True $ sieve)
@@ -47,7 +47,7 @@ primeList n = 2 : (map indexToValue $ U.toList $ U.elemIndices True $ sieve)
 --
 -- 1 〜 n までの約数のリスト
 --
--- * ex : divisorsList 5  =>  [[1],[1,2],[1,3],[1,2,4],[1,5]]
+-- + ex : divisorsList 5  =>  [[1],[1,2],[1,3],[1,2,4],[1,5]]
 --
 divisorsList :: Int -> [[Int]]
 divisorsList n = tail $ V.toList $ sieve

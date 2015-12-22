@@ -125,7 +125,7 @@ isPandigitalList = isPandigitalStr . map intToDigit
 --
 -- 順列 ( 辞書順 )
 --
--- * Data.List に "permutations" が存在するが返り値が辞書順ではない
+-- + Data.List に "permutations" が存在するが返り値が辞書順ではない
 -- ex : permutation [1..3] 2 => [[1,2],[1,3],[2,1],[2,3],[3,1],[3,2]]
 --
 permutation :: [a] -> Int -> [[a]]

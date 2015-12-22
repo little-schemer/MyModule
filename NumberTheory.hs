@@ -21,8 +21,8 @@ import MyModule.Utility (integralToList)
 -----------------------------------------
 -- 『素因数分解と素数判定』 p.29 参照
 --
--- * 関数 f は Monoid 則を満していること。
--- * e の初期値 : 関数 f の単位元
+-- + 関数 f は Monoid 則を満していること。
+-- + e の初期値 : 関数 f の単位元
 --
 -- ex : 2^100 == power (*) 1 2 100
 --
@@ -45,7 +45,7 @@ powerMod a n m = power (\x y -> mod (x * y) m) 1 a n
 --
 -- Fibonacci 数列のリスト
 --
--- * "seq" を使うと速くなる
+-- + "seq" を使うと速くなる
 --
 fibonacciList :: [Integer]
 fibonacciList = fib' 0 1
@@ -54,8 +54,8 @@ fibonacciList = fib' 0 1
 --
 -- Fibonacci 数
 --
--- * 「Gosper & Salamin のアイデア」を使用。
--- * from 『フィボナッチ数とリュカ数の計算法』
+-- + 「Gosper & Salamin のアイデア」を使用。
+-- + from 『フィボナッチ数とリュカ数の計算法』
 --
 fibonacci :: Int -> Integer
 fibonacci 0 = 0
@@ -65,10 +65,10 @@ fibonacci n = fst $ power calc (0, 1) (1, 0) n
 --
 -- Fibonacci 数
 --
--- *「ビネの公式」を使った方法
--- * 参考 :
+-- +「ビネの公式」を使った方法
+-- + 参考 :
 --   http://labs.timedia.co.jp/2012/11/fibonacci-general-term-using-rational.html
--- * (1 / 2 + √5 / 2) ^ n - (1 / 2 - √5 / 2) ^ n を計算すると、有理数
+-- + (1 / 2 + √5 / 2) ^ n - (1 / 2 - √5 / 2) ^ n を計算すると、有理数
 --   項は打ち消しあって、√5 の項のみが残る。
 --
 fibonacci2 :: Int -> Integer
@@ -86,7 +86,7 @@ lucasList = lucas' 2 1
 --
 -- 多角数のリスト
 --
--- * "0" から始まるので注意 !!
+-- + "0" から始まるので注意 !!
 --
 -- ex : polyNumList 3 => [0,1,3,6,10,15,21,28,36,45,55 ..]
 --
@@ -96,7 +96,7 @@ polyNumList n = scanl (+) 0 [1, n - 1 ..]
 --
 -- 多角数の一般項
 --
--- * from Wikipedia
+-- + from Wikipedia
 --
 -- ex : map (polyNum 3) [1 .. 5] => [1,3,6,10,15]
 --
@@ -179,7 +179,7 @@ amicablePairs xs = [(x, fromJust y) | x <- xs,
 --
 -- ピタゴラス数
 --
--- * a + b + c = n, a^2 + b^2 = c^2, a < b < c の組を探す
+-- + a + b + c = n, a^2 + b^2 = c^2, a < b < c の組を探す
 --
 -- 1. a + a + a < n よって a <= div n 3
 -- 2. a^2 + b^2 = (n - a - b)^2 変形すると、
@@ -269,10 +269,10 @@ digits  = length . show
 -- オイラーのφ関数
 -----------------------------------------
 --
--- * 正の整数 n に対して、1 から n までの自然数のうち n と互いに素な
+-- + 正の整数 n に対して、1 から n までの自然数のうち n と互いに素な
 --   ものの個数（1 と n は互いに素と考える）
 --
--- * factorize n => [(a, i), (b, j), (c, l) ...] の時、
+-- + factorize n => [(a, i), (b, j), (c, l) ...] の時、
 --   phi n = n * (1 - 1 / a) * (1 - 1 / b) * (1 - 1 / c) * ...
 --         = n * (a - 1) / a * (b - 1) / b * (c - 1) / c * ...
 --         = a ^ (i - 1) * (a - 1) * b ^ (j - 1) * (b - 1) * ...
@@ -286,7 +286,7 @@ phi n = product [p^(i - 1) * (p - 1) | (p, i) <- factorize n]
 -- メビウス関数
 -----------------------------------------
 --
--- * 定義（ただし 1 は 0 個の素因数を持つと考える）：
+-- + 定義（ただし 1 は 0 個の素因数を持つと考える）：
 --   μ(n) = 0      （n が平方因子を持つ時）
 --   μ(n) = (-1)^k （n が相異なる k 個の素因数に分解されるとき）
 --
@@ -309,9 +309,9 @@ binarySize = length . integralToList 2
 -- ペル方程式
 -----------------------------------------
 --
--- * "x^2 - d * y^ = 1" の解 (x, y) (x > 1, y > 1) を小さい順に返す。
+-- + "x^2 - d * y^ = 1" の解 (x, y) (x > 1, y > 1) を小さい順に返す。
 --
--- * from http://www004.upp.so-net.ne.jp/s_honma/pell/pell.htm
+-- + from http://www004.upp.so-net.ne.jp/s_honma/pell/pell.htm
 --
 pell'sEquation :: Integer -> [(Integer, Integer)]
 pell'sEquation d = iterate (f (x, y)) (x, y)
