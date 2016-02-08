@@ -1,6 +1,6 @@
 -------------------------------------------------------------
 --
--- ƒxƒNƒgƒ‹‹y‚Ñs—ñ‚ÌŒvŽZ
+-- ãƒ™ã‚¯ãƒˆãƒ«åŠã³è¡Œåˆ—ã®è¨ˆç®—
 --
 -- Module : MyModule.Matrix
 -- Coding : Little Schemer
@@ -15,20 +15,20 @@ import MyModule.Utility     (deleteAt, splits)
 
 
 -----------------------------------------
---  ƒxƒNƒgƒ‹‚Ì‰‰ŽZ
+--  ãƒ™ã‚¯ãƒˆãƒ«ã®æ¼”ç®—
 -----------------------------------------
 --
---  + ƒxƒNƒgƒ‹‚Í”’l‚ÌƒŠƒXƒg‚ÌŒ`‚Å•\‚·B
---  + ex : 3ŽŸŒ³‚ÌƒxƒNƒgƒ‹ [1,2,3]
+--  + ãƒ™ã‚¯ãƒˆãƒ«ã¯æ•°å€¤ã®ãƒªã‚¹ãƒˆã®å½¢ã§è¡¨ã™ã€‚
+--  + ex : 3æ¬¡å…ƒã®ãƒ™ã‚¯ãƒˆãƒ« [1,2,3]
 --
 
 type Vector a = [a]
 
 
 --
--- ƒxƒNƒgƒ‹‚Ì m ”Ô–Ú‚Ì—v‘f
+-- ãƒ™ã‚¯ãƒˆãƒ«ã® m ç•ªç›®ã®è¦ç´ 
 --
--- (’Êí‚ÌƒŠƒXƒg‚ÆˆÙ‚èA1 ‚©‚ç”‚¦Žn‚ß‚é)
+-- (é€šå¸¸ã®ãƒªã‚¹ãƒˆã¨ç•°ã‚Šã€1 ã‹ã‚‰æ•°ãˆå§‹ã‚ã‚‹)
 --
 vectorRef :: Num a => Int -> Vector a -> a
 vectorRef m xs = xs !! (m - 1)
@@ -62,13 +62,13 @@ infixl 6 /-/
 infixl 7 /*/
 
 --
--- Vector ‚Ìâ‘Î’l
+-- Vector ã®çµ¶å¯¾å€¤
 --
 vectorAbs :: Floating a => Vector a -> a
 vectorAbs xs = sqrt (xs /*/ xs)
 
 --
--- n ŽŸŒ³‚Ìƒ[ƒƒxƒNƒgƒ‹
+-- n æ¬¡å…ƒã®ã‚¼ãƒ­ãƒ™ã‚¯ãƒˆãƒ«
 --
 zeroVector :: Num a => Int -> Vector a
 zeroVector n = replicate n 0
@@ -76,19 +76,19 @@ zeroVector n = replicate n 0
 
 
 -----------------------------------------
--- s—ñ‚Ì‰‰ŽZ
+-- è¡Œåˆ—ã®æ¼”ç®—
 -----------------------------------------
 --
--- + s—ñ‚ÍsƒxƒNƒgƒ‹‚ÌƒŠƒXƒg‚ÌŒ`‚Å•\‚·B
--- + ex : 2s3—ñ‚Ìs—ñ [[1,2,3],[4,5,6]]
--- + s‚Æ—ñ‚Ì®‡«‚Í’²‚×‚Ä‚¢‚È‚¢‚Ì‚Å’ˆÓ!!
+-- + è¡Œåˆ—ã¯è¡Œãƒ™ã‚¯ãƒˆãƒ«ã®ãƒªã‚¹ãƒˆã®å½¢ã§è¡¨ã™ã€‚
+-- + ex : 2è¡Œ3åˆ—ã®è¡Œåˆ— [[1,2,3],[4,5,6]]
+-- + è¡Œã¨åˆ—ã®æ•´åˆæ€§ã¯èª¿ã¹ã¦ã„ãªã„ã®ã§æ³¨æ„!!
 --
 
 type Matrix a = [Vector a]
 
 
 --
--- ƒŠƒXƒg‚©‚ç m s n —ñ‚Ìs—ñ‚ðì‚é
+-- ãƒªã‚¹ãƒˆã‹ã‚‰ m è¡Œ n åˆ—ã®è¡Œåˆ—ã‚’ä½œã‚‹
 --
 makeMatrix :: Num a => (Int, Int) -> [a] -> Matrix a
 makeMatrix (m, n) xs = check $ splits n xs
@@ -98,15 +98,15 @@ makeMatrix (m, n) xs = check $ splits n xs
       | otherwise = error "Wrong Matrix !"
 
 --
--- m s n —ñ‚Ìs—ñ‚©‚ð’²‚×‚é
+-- m è¡Œ n åˆ—ã®è¡Œåˆ—ã‹ã‚’èª¿ã¹ã‚‹
 --
 checkMatrix :: Num a => (Int, Int) -> Matrix a -> Bool
 checkMatrix (m, n) ma = (length ma == m) && (and [length xs == n | xs <- ma])
 
 --
--- s—ñ‚Ì m s–Ú n —ñ–Ú‚Ì—v‘f
+-- è¡Œåˆ—ã® m è¡Œç›® n åˆ—ç›®ã®è¦ç´ 
 --
--- ( ’Êí‚ÌƒŠƒXƒg‚ÆˆÙ‚è 1 ‚©‚ç”‚¦Žn‚ß‚é )
+-- ( é€šå¸¸ã®ãƒªã‚¹ãƒˆã¨ç•°ã‚Š 1 ã‹ã‚‰æ•°ãˆå§‹ã‚ã‚‹ )
 --
 matrixRef :: Num a => (Int, Int) -> Matrix a -> a
 matrixRef (m, n) xss = (xss !! (m - 1)) !! (n - 1)
@@ -141,29 +141,29 @@ infixl 6 |-|
 infixl 7 |*|
 
 --
--- m s n —ñ‚Ìƒ[ƒs—ñ
+-- m è¡Œ n åˆ—ã®ã‚¼ãƒ­è¡Œåˆ—
 --
 zeroMatrix :: Num a => (Int, Int) -> Matrix a
 zeroMatrix (m, n) = replicate m $ zeroVector n
 
 --
--- n ŽŸ‚Ì’PˆÊs—ñ
+-- n æ¬¡ã®å˜ä½è¡Œåˆ—
 --
 unitMatrix :: Num a => Int -> Matrix a
 unitMatrix n = map f [0 .. (n - 1)]
   where f m = take n $ replicate m 0 ++ (1 : repeat 0)
 
 --
--- Matrix ^ n i³•ûs—ñ‚Ì‚Ý‰Âj
+-- Matrix ^ n ï¼ˆæ­£æ–¹è¡Œåˆ—ã®ã¿å¯ï¼‰
 --
 (|^) :: Num a => Matrix a -> Int -> Matrix a
 (|^) xss n = power (|*|) (unitMatrix (length xss)) xss n
 infixr 8 |^
 
 --
--- s—ñŽ®
+-- è¡Œåˆ—å¼
 --
--- + Ä‹A‚ðŒJ‚è•Ô‚·‚Ì‚Å’x‚¢BLU •ª‰ð‚ðŽg‚Á‚½‚‘¬‚È•û–@‚ª‚ ‚é‚ç‚µ‚¢B
+-- + å†å¸°ã‚’ç¹°ã‚Šè¿”ã™ã®ã§é…ã„ã€‚LU åˆ†è§£ã‚’ä½¿ã£ãŸé«˜é€Ÿãªæ–¹æ³•ãŒã‚ã‚‹ã‚‰ã—ã„ã€‚
 --
 det :: Num a => Matrix a -> a
 det [[a]] = a
@@ -188,16 +188,16 @@ det (m : ms) = sum $ zipWith (*) m [cofactor1 j ms | j <- [1 ..]]
 -- det2 d = sum [s * head x * det2 (pmat i d) | (s, i, x) <- zip3 (cycle [1, -1]) [0..] d]
 
 --
--- (i, j) —]ˆöŽq
+-- (i, j) ä½™å› å­
 --
 cofactor :: Num a => (Int, Int) -> Matrix a -> a
 cofactor (i, j) ma = if odd (i + j) then negate x else x
   where x = det $ map (deleteAt (j - 1)) $ deleteAt (i - 1) ma
 
 --
--- Fibonacci ”
+-- Fibonacci æ•°
 --
--- + s—ñ‚ðŽg—p
+-- + è¡Œåˆ—ã‚’ä½¿ç”¨
 --
 fibonacci :: Int -> Integer
 fibonacci n = matrixRef (1, 2) $ [[1,1],[1,0]] |^ n
