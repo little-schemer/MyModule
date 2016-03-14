@@ -25,7 +25,7 @@ import Data.List (group, intercalate)
 primes :: Integral a => [a]
 primes = map fromIntegral $ [2, 3] ++ primes'
     where
-      primes' = [5] ++ f 5 7 primes'
+      primes' = [5] ++ f 1 7 primes'
       f m s (p : ps) = [n | n <- ns, gcd m n == 1] ++ f (m * p) (p * p) ps
           where ns = concat [[x, x + 4] | x <- [s, s + 6 .. p * p - 2]]
 
