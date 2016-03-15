@@ -27,12 +27,15 @@ primes = map fromIntegral $ [2, 3] ++ primes'
     where
       primes' = [5] ++ f 1 7 primes'
       f m s (p : ps) = [n | n <- ns, gcd m n == 1] ++ f (m * p) (p * p) ps
-          where ns = concat [[x, x + 4] | x <- [s, s + 6 .. p * p - 2]]
+          where ns = [x + y | x <- [s, s + 6 .. p * p - 2], y <- [0, 4]]
 
 -- memo :
 --  num1 = 2 : 3 : [x + y | x <- [6, 12 ..], y <- [-1, 1]]
 --  num2 = 2 : 3 : concat [[6 * x -1, 6 * x + 1] | x <- [1 ..]]
---  だと、num2 の方が速い。
+--  だと、num1 の方が速い。
+--
+
+
 
 --
 -- 素数判定 (試し割り法)
