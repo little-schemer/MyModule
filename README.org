@@ -7,4 +7,3 @@
   + Primes.hs :: 素数列、素数判定、素因数分解
   + Sieve.hs :: Data.Vector を使用した篩系の関数
   + Utility.hs :: Project Euler などの問題を解くために利用できそうな関数群
-  + test
