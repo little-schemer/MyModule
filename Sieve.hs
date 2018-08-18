@@ -52,14 +52,11 @@ divisorsList n = tail $ V.toList $ sieve
   where
     sieve = runST $ do
       mVec <- VM.replicate (n + 1) []
-      mapM_ (setDivs mVec) [n, n - 1 .. 1]
+      forM_ [n, n - 1 .. 1] $ \i -> do
+        forM_ [i, i + i .. n] $ \j -> do
+          lst <- VM.unsafeRead mVec j
+          VM.unsafeWrite mVec j (i : lst)
       V.unsafeFreeze mVec
-
-    setDivs vec i  = mapM_ (setNum i) [i, i + i .. n]
-      where
-        setNum n i = do
-          lst <- VM.unsafeRead vec i
-          VM.unsafeWrite vec i (n : lst)
 
 
 --
@@ -77,17 +74,14 @@ factorsList' n = tail $ map reverse $  V.toList $ sieve
   where
     sieve = runST $ do
       vec <- VM.replicate (n + 1) []
-      mapM_ (consP vec) [2 .. n]
+      forM_ [2 .. n] $ \i -> do
+        v <- VM.unsafeRead vec i
+        when (null v) $ do
+          forM_ (takeWhile (<= n) $ iterate (* i) i) $ \j -> do
+            forM_ [j, 2 * j .. n] $ \k -> do
+              ps <- VM.unsafeRead vec k
+              VM.unsafeWrite vec k (i : ps)
       V.unsafeFreeze vec
-
-    consP vec p = do
-      v <- VM.unsafeRead vec p
-      when (null v) $ mapM_ f $ takeWhile (<= n) $ iterate (* p) p
-        where
-          f i = mapM_ g [i, 2 * i .. n]
-          g i = do
-            ps <- VM.unsafeRead vec i
-            VM.unsafeWrite vec i (p : ps)
 
 
 --
