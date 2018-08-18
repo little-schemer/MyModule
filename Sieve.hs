@@ -33,15 +33,13 @@ primeList n = 2 : (map indexToValue $ U.toList $ U.elemIndices True $ sieve)
 
     sieve = runST $ do
       mVec <- UM.replicate (lastIndex + 1) True
-      mapM_ (loop mVec) [0 .. valueToIndex (floor $ sqrt $ fromIntegral n)]
+      forM_ [0 .. valueToIndex (floor $ sqrt $ fromIntegral n)] $ \i -> do
+        v <- UM.unsafeRead mVec i
+        when v $ do
+          let (s, d) = (2 * i * (i + 3) + 3, indexToValue i)
+          forM_ [s, s + d .. lastIndex] $ \j -> do
+            UM.unsafeWrite mVec j False
       U.unsafeFreeze mVec
-
-    loop vec i = do
-      v <- UM.unsafeRead vec i
-      when v $ do
-        let (s, d) = (2 * i * (i + 3) + 3, indexToValue i)
-        mapM_ setFalse [s, s + d .. lastIndex]
-          where setFalse i = UM.unsafeWrite vec i False
 
 
 --
